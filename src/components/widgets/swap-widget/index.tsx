@@ -11,19 +11,33 @@ export default function SwapWidgets() {
     "Transact" | "Select" | "Order Confirmation" | "Confirmation"
   >("Transact");
   const [swapTokens, setSwapTokens] = useState<ISwapWidget[]>([
-    { amount: 100, coin: "ETH", balance: 175, tag: "ETH", coinAmount: 0.032 },
+    {
+      amount: 0,
+      coin: "ETH",
+      balance: 3,
+      tag: "ETH",
+      coinAmount: 0,
+      tokenIcon: "ethereum",
+    },
   ]);
   const handleAddToken = () => {
     setSwapTokens((prevSt) => [
       ...prevSt,
-      { amount: 100, coin: "WIF", balance: 0, tag: "ETH", coinAmount: 10520 },
+      {
+        amount: 0,
+        coin: "SOL",
+        balance: 10,
+        tag: "SOL",
+        coinAmount: 0,
+        tokenIcon: "solana",
+      },
     ]);
     setStep("Transact");
   };
   return (
     <div
       className={cn(
-        "overflow flex aspect-square flex-col justify-between rounded-[20px] bg-black p-4 pb-0 font-sans",
+        "overflow mx-auto flex aspect-square h-[370px] w-[320px] flex-col justify-between rounded-[20px] bg-black p-4 pb-0 font-sans md:float-left",
         {
           "pb-4": step !== "Select",
         },

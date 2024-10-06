@@ -120,7 +120,7 @@ export default function DesktopStart(props: any) {
         strategy="afterInteractive"
         onLoad={() => setScriptLoaded(true)}
       />
-      <div id="debridgeWidget"></div>
+      <div id="debridgeWidget" className="mx-auto"></div>
     </>
   );
 }
