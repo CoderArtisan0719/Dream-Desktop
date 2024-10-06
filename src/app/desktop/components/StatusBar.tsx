@@ -124,12 +124,12 @@ export function StatusBar() {
 
       {/* Right-aligned section */}
       <div className="flex items-center gap-2">
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <div className="relative h-[18px] w-[18px]" />
           <div className="relative h-[18px] w-[18px] rounded-md" />
           <div className="relative h-[18px] w-[18px]" />
           <div className="relative h-[18px] w-[18px]" />
-        </div>
+        </div> */}
         <div className="text-right text-[10px] font-semibold leading-none text-black">
           Dec 1, 4:16 PM
         </div>

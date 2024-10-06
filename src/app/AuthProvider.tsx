@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.log({ isLoggedIn });
 
         if (!isLoggedIn) {
-          router.push("/login");
+          // router.push("/login");
           return;
         }
 
