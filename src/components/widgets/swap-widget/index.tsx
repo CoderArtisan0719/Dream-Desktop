@@ -23,7 +23,7 @@ export default function SwapWidgets() {
   return (
     <div
       className={cn(
-        "flex aspect-square flex-col justify-between overflow-hidden rounded-[20px] bg-black p-4 pb-0 font-sans",
+        "overflow flex aspect-square flex-col justify-between rounded-[20px] bg-black p-4 pb-0 font-sans",
         {
           "pb-4": step !== "Select",
         },
