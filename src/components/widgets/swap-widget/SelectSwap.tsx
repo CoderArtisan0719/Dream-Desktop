@@ -53,8 +53,8 @@ export function SelectSwapToken({
           <p className="text-base">Your Favorites</p>
         </div>
         <div className="h-full space-y-3.5 overflow-auto px-0">
-          {new Array(2)
-            .fill(ETHEREUM)
+          {new Array(1)
+            .fill(SOLANA)
             .map(({ tokenIcon, network, token, amount, rate, tag }, idx) => (
               <Button
                 onClick={handleSelect}
@@ -115,4 +115,13 @@ const ETHEREUM = {
   tag: "ETH",
   amount: 3.2,
   rate: 10.93,
+};
+
+const SOLANA = {
+  tokenIcon: "solana",
+  network: "solana-blue",
+  token: "Solana",
+  tag: "SOL",
+  amount: 146.04,
+  rate: 2.18,
 };

@@ -19,7 +19,7 @@ export function Transact({
             <div className="relative" key={idx}>
               {idx > 0 ? (
                 <div className="absolute -top-4.5 left-1/2 flex h-[28px] w-[42px] -translate-x-1/2 transform items-center justify-center rounded-full bg-[#232323]">
-                  <Icon name="data-transfer" className="text-white/20" />
+                  <Icon name="data-transfer" className="text-white" />
                 </div>
               ) : null}
               <SelectToken key={idx} token={token} from={idx === 0} />

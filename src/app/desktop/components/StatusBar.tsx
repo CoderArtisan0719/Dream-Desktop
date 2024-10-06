@@ -3,7 +3,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -34,7 +34,7 @@ export function StatusBar() {
       <div className="flex items-center">
         <Popover>
           <PopoverTrigger asChild>
-            <div className="mr-2 flex items-center justify-start rounded-md border border-black/10 bg-white cursor-pointer">
+            <div className="mr-2 flex cursor-pointer items-center justify-start rounded-md border border-black/10 bg-white">
               <div className="flex h-[21px] w-[21px] items-center justify-center rounded-l-md">
                 <img
                   className="h-[21px] w-[21px]"
@@ -63,14 +63,15 @@ export function StatusBar() {
                 <h4 className="text-[28px] font-semibold leading-none">
                   <DreamId />
                 </h4>
-                <p className="text-sm text-muted-foreground lowercase">
-                  {`@`}<DreamId />
+                <p className="text-sm lowercase text-muted-foreground">
+                  {`@`}
+                  <DreamId />
                 </p>
-                <p className="py-2 text-md text-black font-medium">
+                <p className="py-2 text-md font-medium text-black">
                   For peace world.
                 </p>
                 <p className="pb-2 text-md font-medium text-black">
-                  Dream bigger big dreamer. Building{' '}
+                  Dream bigger big dreamer. Building{" "}
                   <span className="text-[#007AFF]">@dreamos</span>
                 </p>
                 <div className="flex justify-between">
@@ -83,11 +84,10 @@ export function StatusBar() {
                     <span> Following</span>
                   </p>
                 </div>
-
               </div>
               <div className="">
                 <img
-                  className="w-[94px] no-max-width"
+                  className="no-max-width w-[94px]"
                   src="/images/avatar_popup.svg"
                   alt="User"
                 />
