@@ -8,9 +8,17 @@ import getTokenOut from "@/app/api/v1/transaction/getTokenOut";
 export function SelectToken({
   token: { amount, balance, coin, tag, coinAmount, tokenIcon },
   from = false,
+  updateTokenAmount,
+  swapTokens,
 }: {
+  swapTokens: Array<object>;
   token: ISwapWidget;
   from: boolean;
+  updateTokenAmount?: (
+    index: number,
+    newAmount: number,
+    newCoinAmount: number,
+  ) => void;
 }) {
   const [doToken, setDoToken] = useState({
     amount,
@@ -20,7 +28,72 @@ export function SelectToken({
     coinAmount,
     tokenIcon,
   });
+  console.log(doToken);
   const [slider, setSlider] = useState(0);
+
+  const handleSliderChange = async (value: number) => {
+    setSlider(value);
+
+    if (value === 0) {
+      setDoToken({
+        ...doToken,
+        coinAmount: 0,
+        amount: 0,
+      });
+      if (updateTokenAmount) {
+        updateTokenAmount(1, 0, 0);
+      }
+
+      return;
+    }
+
+    let temp = (doToken.balance * value) / 100;
+
+    const { estimation } = await getTokenOut({
+      chainId: "1",
+      tokenIn: "0x0000000000000000000000000000000000000000",
+      tokenInAmount: `${temp * 10 ** 18}`,
+      tokenOut: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    });
+
+    const { tokenOut } = estimation;
+
+    setDoToken({
+      ...doToken,
+      coinAmount: temp,
+      amount: (tokenOut.amount / 10 ** tokenOut.decimals).toFixed(3),
+    });
+
+    updateTokenAmount(
+      0,
+      (tokenOut.amount / 10 ** tokenOut.decimals).toFixed(3),
+      temp,
+    );
+
+    if (!updateTokenAmount || !swapTokens[1]) {
+      return;
+    }
+
+    console.log("swaptokens", swapTokens);
+    {
+      const { estimation } = await getTokenOut({
+        chainId: "7565164",
+        tokenIn: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+        tokenInAmount: `${tokenOut.amount * 10 ** tokenOut.decimals}`,
+        tokenOut: "11111111111111111111111111111111",
+      });
+
+      console.log("estimationto", estimation);
+      // const { tokenOut } = estimation;
+    }
+    // console.log("tokenout", tokenOut);
+    // updateTokenAmount(
+    //   1,
+    //   (tokenOut.amount / 10 ** tokenOut.decimals).toFixed(3),
+    //   temp,
+    // );
+    // };
+  };
 
   return (
     <div
@@ -88,28 +161,9 @@ export function SelectToken({
             min="0"
             max="100"
             defaultValue={slider}
-            onChange={async ({ currentTarget: { value } }) => {
-              setSlider(Number(value));
-              let temp = (balance * value) / 100;
-              // setDoToken({ ...doToken, coinAmount: temp });
-              console.log("coinamount", temp);
-             
-                const { estimation } = await getTokenOut({
-                  chainId: "1",
-                  tokenIn: "0x0000000000000000000000000000000000000000",
-                  tokenInAmount: `${temp * 10 ** 18}`,
-                  tokenOut: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-                });
-                const { tokenOut } = estimation;
-                setDoToken({
-                  ...doToken,
-                  coinAmount: temp,
-                  amount: (tokenOut.amount / 10 ** tokenOut.decimals).toFixed(
-                    3,
-                  ),
-                });
-              console.log("estimation", doToken.coinAmount);
-            }}
+            onChange={({ currentTarget }) =>
+              handleSliderChange(Number(currentTarget.value))
+            }
             className="slider relative z-10 size-full appearance-none bg-transparent focus:outline-none"
           />
           <span className="absolute right-2 text-xs font-semibold text-white">{`${slider}%`}</span>
