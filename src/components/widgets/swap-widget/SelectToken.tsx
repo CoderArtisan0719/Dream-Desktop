@@ -41,6 +41,7 @@ export function SelectToken({
       });
       if (updateTokenAmount) {
         updateTokenAmount(1, 0, 0);
+        updateTokenAmount(0, 0, 0);
       }
 
       return;
@@ -74,8 +75,6 @@ export function SelectToken({
       return;
     }
 
-    console.log("swaptokens", swapTokens);
-
     {
       const { estimation } = await getTokenOut({
         chainId: "7565164",
@@ -84,17 +83,8 @@ export function SelectToken({
         tokenOut: "11111111111111111111111111111111",
       });
 
-      console.log("estimationto", estimation);
       const { tokenOut } = estimation;
 
-      console.log("tokenout", tokenOut);
-
-      console.log(
-        "usd",
-        tokenFrom.amount / 10 ** tokenFrom.decimals,
-        "sol",
-        (tokenOut.amount / 10 ** tokenOut.decimals).toFixed(3),
-      );
       updateTokenAmount(
         1,
         (tokenFrom.amount / 10 ** tokenFrom.decimals).toFixed(3),
@@ -103,7 +93,6 @@ export function SelectToken({
     }
   };
 
-  console.log("in transaction", coinAmount, amount);
   return (
     <div
       className={cn(

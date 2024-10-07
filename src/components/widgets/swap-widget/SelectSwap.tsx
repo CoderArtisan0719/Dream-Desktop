@@ -1,18 +1,56 @@
+import getTokens from "@/app/api/v1/transaction/getTokens";
 import { Button } from "@/components/ui/button";
 import Icon, { IconName } from "@/components/ui/icon";
 import { formatAmount } from "@/utils";
 import { cn } from "@/utils/tailwind";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+interface TokenOption {
+  label: IconName;
+  icon: string;
+}
 
 export function SelectSwapToken({
   handleSelect,
 }: {
   handleSelect: () => void;
 }) {
+  const [tokenList, setTokenList] = useState([]);
   const [selectedToken, setSelectedToken] = useState<
     (typeof TOKEN_OPTIONS)[number]
-  >({ label: "All" });
+  >({ label: "Ethereum" });
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    async function func() {
+      const chainId =
+        selectedToken.label == "Ethereum"
+          ? 1
+          : selectedToken.label == "Solana"
+            ? 7565164
+            : 8453;
+      const temp = await getTokens({ chainId });
+      const tokensArray = Object.values(temp.tokens);
+      setTokenList(tokensArray);
+    }
+    func();
+  }, [selectedToken]);
+
+  function isValidUrl(uri: string) {
+    try {
+      new URL(uri);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  const changeUrl = (uri: string) => {
+    const cleanedUrl = encodeURI(uri.trim());
+    return cleanedUrl;
+  };
+
   return (
     <div className="h-full overflow-hidden">
       <div className="flex h-[42px] w-full items-center space-x-2 rounded-[12px] bg-white/5 px-2.5 pl-[11px] text-white/40">
@@ -53,9 +91,8 @@ export function SelectSwapToken({
           <p className="text-base">Your Favorites</p>
         </div>
         <div className="h-full space-y-3.5 overflow-auto px-0">
-          {new Array(1)
-            .fill(SOLANA)
-            .map(({ tokenIcon, network, token, amount, rate, tag }, idx) => (
+          {tokenList.map(
+            ({ logoURI, name, amount = 3, rate = 3, symbol }, idx) => (
               <Button
                 onClick={handleSelect}
                 className="flex w-full justify-between bg-transparent !p-0"
@@ -63,7 +100,16 @@ export function SelectSwapToken({
               >
                 <div className="flex space-x-4">
                   <div className="relative inline-flex size-10 items-center justify-center rounded-full bg-white">
-                    <Icon name={tokenIcon} className="size-6" />
+                    <Image
+                      src={
+                        isValidUrl(logoURI)
+                          ? changeUrl(logoURI)
+                          : "https://tokens.1inch.io/0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.png"
+                      }
+                      width={30}
+                      height={30}
+                      alt={name}
+                    />
                     {selectedToken?.icon ? (
                       <div className="absolute -right-0.5 bottom-0 size-4">
                         <Icon name={selectedToken.icon} />
@@ -71,8 +117,8 @@ export function SelectSwapToken({
                     ) : null}
                   </div>
                   <div className="flex flex-col items-start font-medium">
-                    <p className="text-[17px]">{token}</p>
-                    <p className="text-white/60">{tag}</p>
+                    <p className="text-[17px]">{name}</p>
+                    <p className="text-white/60">{symbol}</p>
                   </div>
                 </div>
                 <div className="flex flex-col items-end font-medium">
@@ -82,7 +128,8 @@ export function SelectSwapToken({
                   <p className="text-[#34C759]">{`+${rate}%`}</p>
                 </div>
               </Button>
-            ))}
+            ),
+          )}
           <div className="h-4 w-full" />
         </div>
       </div>

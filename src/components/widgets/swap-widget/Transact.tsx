@@ -17,7 +17,6 @@ export function Transact({
     newCoinAmount: number,
   ) => void;
 }) {
-  console.log("transact swaptokens", swapTokens);
   return (
     <>
       <div className="flex flex-col space-y-2">
@@ -68,7 +67,7 @@ export function Transact({
           onClick={handleSelect}
           size="lg"
           variant="plain"
-          className="mt-2 min-h-[43px]"
+          className="mt-1 min-h-[43px]"
         >
           Swap
         </Button>
