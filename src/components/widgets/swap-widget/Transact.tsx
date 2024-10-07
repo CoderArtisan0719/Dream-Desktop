@@ -17,6 +17,7 @@ export function Transact({
     newCoinAmount: number,
   ) => void;
 }) {
+  console.log("transact swaptokens", swapTokens);
   return (
     <>
       <div className="flex flex-col space-y-2">

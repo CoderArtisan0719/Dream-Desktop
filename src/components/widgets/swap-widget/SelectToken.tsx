@@ -28,7 +28,6 @@ export function SelectToken({
     coinAmount,
     tokenIcon,
   });
-  console.log(doToken);
   const [slider, setSlider] = useState(0);
 
   const handleSliderChange = async (value: number) => {
@@ -57,6 +56,7 @@ export function SelectToken({
     });
 
     const { tokenOut } = estimation;
+    const tokenFrom = tokenOut;
 
     setDoToken({
       ...doToken,
@@ -75,26 +75,35 @@ export function SelectToken({
     }
 
     console.log("swaptokens", swapTokens);
+
     {
       const { estimation } = await getTokenOut({
         chainId: "7565164",
         tokenIn: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-        tokenInAmount: `${tokenOut.amount * 10 ** tokenOut.decimals}`,
+        tokenInAmount: `${tokenFrom.amount}`,
         tokenOut: "11111111111111111111111111111111",
       });
 
       console.log("estimationto", estimation);
-      // const { tokenOut } = estimation;
+      const { tokenOut } = estimation;
+
+      console.log("tokenout", tokenOut);
+
+      console.log(
+        "usd",
+        tokenFrom.amount / 10 ** tokenFrom.decimals,
+        "sol",
+        (tokenOut.amount / 10 ** tokenOut.decimals).toFixed(3),
+      );
+      updateTokenAmount(
+        1,
+        (tokenFrom.amount / 10 ** tokenFrom.decimals).toFixed(3),
+        (tokenOut.amount / 10 ** tokenOut.decimals).toFixed(3),
+      );
     }
-    // console.log("tokenout", tokenOut);
-    // updateTokenAmount(
-    //   1,
-    //   (tokenOut.amount / 10 ** tokenOut.decimals).toFixed(3),
-    //   temp,
-    // );
-    // };
   };
 
+  console.log("in transaction", coinAmount, amount);
   return (
     <div
       className={cn(
@@ -111,7 +120,7 @@ export function SelectToken({
       <div className="mb-2.5 mt-2.25 flex justify-between">
         <span className="text-3xl font-semibold">
           <sup className="text-lg">$</sup>
-          {doToken.amount}
+          {amount}
         </span>
         <div className="flex h-[37px] cursor-pointer items-center space-x-2 rounded-[9px] bg-white/5 py-1.5 pl-2.25 pr-1 transition-all active:scale-90">
           <div className="relative">
@@ -134,7 +143,7 @@ export function SelectToken({
       </div>
       <div className="flex items-center justify-between">
         <span className="flex space-x-1.5 text-xs">
-          <p className="text-white/40">{`~ ${doToken.coinAmount} ${tag}`}</p>
+          <p className="text-white/40">{`~ ${coinAmount} ${tag}`}</p>
           <Icon name="data-transfer" className="size-[14px] text-white/60" />
         </span>
         <div className="flex w-[95px] items-center justify-between text-xs font-medium">
