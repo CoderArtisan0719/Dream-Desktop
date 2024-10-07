@@ -6,11 +6,18 @@ export function Transact({
   handleSelect,
   swapTokens,
   hasError,
+  updateTokenAmount,
 }: {
   handleSelect: () => void;
   swapTokens: ISwapToken[];
   hasError: boolean;
+  updateTokenAmount?: (
+    index: number,
+    newAmount: number,
+    newCoinAmount: number,
+  ) => void;
 }) {
+  console.log("transact swaptokens", swapTokens);
   return (
     <>
       <div className="flex flex-col space-y-2">
@@ -22,7 +29,13 @@ export function Transact({
                   <Icon name="data-transfer" className="text-white" />
                 </div>
               ) : null}
-              <SelectToken key={idx} token={token} from={idx === 0} />
+              <SelectToken
+                swapTokens={swapTokens}
+                key={idx}
+                token={token}
+                from={idx === 0}
+                updateTokenAmount={updateTokenAmount}
+              />
             </div>
           ))}
         </div>
