@@ -10,11 +10,9 @@ import { Suspense } from "react";
 
 async function DreamId() {
   const user = await getUser();
-  // console.log({ user });
 
   return (
     <span>
-      {/* {user.dreamId} */}
       {user.dreamId || (
         <Link
           href="/claim/choose"
@@ -30,7 +28,6 @@ async function DreamId() {
 export function StatusBar() {
   return (
     <div className="absolute left-4 right-4 top-5 z-20 flex h-[29px] flex-row items-center justify-between rounded-lg bg-white px-5 font-mono shadow backdrop-blur-[48px]">
-      {/* Left-aligned section */}
       <div className="flex items-center">
         <Popover>
           <PopoverTrigger asChild>
@@ -97,7 +94,6 @@ export function StatusBar() {
         </Popover>
       </div>
 
-      {/* Centered section */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-1">
           <div className="text-center text-[10px] font-medium leading-none text-black opacity-60">
@@ -122,14 +118,7 @@ export function StatusBar() {
         </div>
       </div>
 
-      {/* Right-aligned section */}
       <div className="flex items-center gap-2">
-        {/* <div className="flex gap-2">
-          <div className="relative h-[18px] w-[18px]" />
-          <div className="relative h-[18px] w-[18px] rounded-md" />
-          <div className="relative h-[18px] w-[18px]" />
-          <div className="relative h-[18px] w-[18px]" />
-        </div> */}
         <div className="text-right text-[10px] font-semibold leading-none text-black">
           Dec 1, 4:16 PM
         </div>
@@ -138,19 +127,3 @@ export function StatusBar() {
   );
 }
 
-// example from: https://nextjs.org/docs/app/building-your-application/rendering/partial-prerendering#dynamic-components
-// import { Suspense } from 'react'
-// import { User, AvatarSkeleton } from './user'
-
-// export const experimental_ppr = true
-
-// export default function Page() {
-//   return (
-//     <section>
-//       <h1>This will be prerendered</h1>
-//       <Suspense fallback={<AvatarSkeleton />}>
-//         <User />
-//       </Suspense>
-//     </section>
-//   )
-// }

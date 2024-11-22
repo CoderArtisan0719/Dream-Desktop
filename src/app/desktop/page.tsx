@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Desktop() {
   return (
-    <div className="relative z-10 flex h-full min-h-screen items-center p-12">
+    <div className="relative z-10 mx-auto flex h-full items-center p-12">
       <div className="inline-flex w-[400px] flex-col items-start justify-start gap-6 rounded-[30px] bg-white p-6">
         <div className="flex h-[68px] flex-col items-start justify-start gap-2 self-stretch">
           <div className="inline-flex items-center justify-between self-stretch">

@@ -20,6 +20,23 @@ export default function SwapWidgets() {
       tokenIcon: "ethereum",
     },
   ]);
+
+  const updateTokenAmount = (
+    index: number,
+    newAmount: number,
+    newCoinAmount: number,
+  ) => {
+    setSwapTokens((prevTokens) => {
+      const updatedTokens = [...prevTokens];
+      updatedTokens[index] = {
+        ...updatedTokens[index],
+        amount: newAmount,
+        coinAmount: newCoinAmount,
+      };
+      return updatedTokens;
+    });
+  };
+
   const handleAddToken = () => {
     setSwapTokens((prevSt) => [
       ...prevSt,
@@ -50,6 +67,7 @@ export default function SwapWidgets() {
             setStep(swapTokens.length > 1 ? "Order Confirmation" : "Select");
           }}
           swapTokens={swapTokens}
+          updateTokenAmount={updateTokenAmount}
         />
       ) : null}
       {step === "Select" ? (
